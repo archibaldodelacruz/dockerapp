@@ -7,7 +7,7 @@ node(label: 'Esclavo-01') {
     
     stage('Build image'){
 
-        app = docker.build('docker.victormerino.cl:5000/dockerapp')
+        app = docker.build('docker.victormerino.cl/dockerapp')
     }
 
     stage('Test image'){
