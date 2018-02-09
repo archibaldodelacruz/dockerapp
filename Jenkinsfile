@@ -10,7 +10,7 @@ node(label: 'Esclavo-01') {
     }
 
     stage('Test image'){
-        sh 'docker exec dockerapp_dockerapp_1 python test.py'
+        sh 'docker exec dockerapp python test.py'
     }
 
     stage('Push image'){
