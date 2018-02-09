@@ -5,7 +5,7 @@ node(label: 'Esclavo-01') {
         checkout scm 
     }
     
-    stage('Build image')´{
+    stage('Build image'){
 
         app = docker.build('docker.victormerino.cl:5000/dockerapp')
     }
