@@ -22,7 +22,6 @@ node(label: 'Esclavo-01') {
         sh 'docker push docker.victormerino.cl:5000/redis:"${env.BUILD_NUMBER}"'
         sh 'docker tag redis docker.victormerino.cl:5000/redis:latest'
         sh 'docker push docker.victormerino.cl:5000/redis:latest'
-        }
 
     }
 
