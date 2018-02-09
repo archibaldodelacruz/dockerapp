@@ -1,6 +1,7 @@
-node Esclavo-01 {
+pipeline {
 
     def app 
+    agent { label: "Esclavo-01"}
 
     stage('Clone repository'){
         checkout scm 
