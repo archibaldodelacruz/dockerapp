@@ -13,7 +13,7 @@ node(label: 'Esclavo-01') {
     stage('Test image'){
 
         app.inside{
-            sh 'python test.py'
+            sh 'python /app/test.py'
         }
     }
 
