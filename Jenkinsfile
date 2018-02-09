@@ -6,15 +6,11 @@ node(label: 'Esclavo-01') {
     }
     
     stage('Build image'){
-
-        app = docker.build('docker.victormerino.cl/dockerapp')
+        sh 'docker-compose up -d'
     }
 
     stage('Test image'){
-
-        app.inside{
-            sh 'python /app/test.py'
-        }
+        sh 'docker exec dockerapp_dockerapp_1 python test.py'
     }
 
     stage('Push image'){
