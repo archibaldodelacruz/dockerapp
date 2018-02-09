@@ -6,6 +6,7 @@ node(label: 'Esclavo-01') {
     }
     
     stage('Build image'){
+        echo ${env.BUILD_NUMBER}
         sh 'docker-compose up -d'
     }
 
