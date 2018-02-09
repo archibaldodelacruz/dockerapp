@@ -14,9 +14,14 @@ node(label: 'Esclavo-01') {
     }
 
     stage('Push image'){
-        docker.withRegistry('https://docker.victormerino.cl:5000'){
-            app.push("${env.BUILD_NUMBER}")
-            app.push("latest")
+        sh 'docker tag dockerapp docker.victormerino.cl:5000/dockerapp:"${env.BUILD_NUMBER}"'
+        sh 'docker push docker.victormerino.cl:5000/dockerapp:"${env.BUILD_NUMBER}"'
+        sh 'docker tag dockerapp docker.victormerino.cl:5000/dockerapp:latest'
+        sh 'docker push docker.victormerino.cl:5000/dockerapp:latest'
+        sh 'docker tag redis docker.victormerino.cl:5000/redis:"${env.BUILD_NUMBER}"'
+        sh 'docker push docker.victormerino.cl:5000/redis:"${env.BUILD_NUMBER}"'
+        sh 'docker tag redis docker.victormerino.cl:5000/redis:latest'
+        sh 'docker push docker.victormerino.cl:5000/redis:latest'
         }
 
     }
