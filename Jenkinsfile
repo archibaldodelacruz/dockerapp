@@ -1,7 +1,7 @@
 node(label: 'Esclavo-01') {
-    def proyectname = "build_${env.BUILD_NUMBER}"
-    def docker_app = "${proyectname}_dockerapp_1"
-    def redis_app = "${proyectname}_redisapp_1"
+    def proyectname = "build_${env.BUILD_NUMBER}_"
+    def docker_app = "${proyectname}dockerapp_1"
+    def redis_app = "${proyectname}redisapp_1"
     stage('Clone repository'){
         checkout scm 
         echo "Docker_app : ${docker_app}"
