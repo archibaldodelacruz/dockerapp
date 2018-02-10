@@ -1,7 +1,7 @@
 node(label: 'Esclavo-01') {
     def proyectname = "build${env.BUILD_NUMBER}"
     def docker_app = "${proyectname}_dockerapp"
-    def redis_app = "${proyectname}_redis"
+
     stage('Clone repository'){
         checkout scm 
         echo "Docker_app : ${docker_app}"
@@ -14,10 +14,15 @@ node(label: 'Esclavo-01') {
     }
 
     stage('Test image'){
-        echo "Docker_app : ${docker_app}"
-        echo "Redis_app : ${redis_app}"
-        echo "proyect name : ${proyectname}"
-        sh "docker exec ${docker_app}_1 python test.py"
+        try{
+            echo "Docker_app : ${docker_app}"
+            echo "proyect name : ${proyectname}"
+            sh "docker exec ${docker_app}_1 python test.py"
+        }
+        catch(exc){
+            sh 'docker-compose down'
+        }
+        
     }
 
     stage('Push image'){
@@ -25,16 +30,11 @@ node(label: 'Esclavo-01') {
         sh "docker push docker.victormerino.cl:5000/dockerapp:${env.BUILD_NUMBER}"
         sh "docker tag ${docker_app} docker.victormerino.cl:5000/dockerapp:latest"
         sh "docker push docker.victormerino.cl:5000/dockerapp:latest"
-        sh "docker tag ${redis_app} docker.victormerino.cl:5000/redis:${env.BUILD_NUMBER}"
+        sh "docker tag redis:3.2.0 docker.victormerino.cl:5000/redis:${env.BUILD_NUMBER}"
         sh "docker push docker.victormerino.cl:5000/redis:${env.BUILD_NUMBER}"
-        sh "docker tag ${redis_app} docker.victormerino.cl:5000/redis:latest"
+        sh "docker tag redis:3.2.0  docker.victormerino.cl:5000/redis:latest"
         sh "docker push docker.victormerino.cl:5000/redis:latest"
 
     }
-
-    stage('Drop container'){
-        sh 'docker-compose down'
-    }
-
 
 }
