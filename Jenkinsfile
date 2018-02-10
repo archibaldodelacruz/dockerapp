@@ -19,27 +19,28 @@ node(label: 'Esclavo-01') {
             sh "docker exec ${docker_app}_1 python test.py"
         }
         catch(exc){
-            sh 'docker-compose down'
-            sh "docker image rm ${docker_app}"
+            sh "docker-compose down --rmi 'all' --remove-orphans"
         }
         
     }
 
     stage('Push image'){
-        sh "docker tag ${docker_app} docker.victormerino.cl:5000/dockerapp:${env.BUILD_NUMBER}"
-        sh "docker push docker.victormerino.cl:5000/dockerapp:${env.BUILD_NUMBER}"
-        sh "docker tag ${docker_app} docker.victormerino.cl:5000/dockerapp:latest"
-        sh "docker push docker.victormerino.cl:5000/dockerapp:latest"
-        sh "docker tag redis:3.2.0 docker.victormerino.cl:5000/redis:${env.BUILD_NUMBER}"
-        sh "docker push docker.victormerino.cl:5000/redis:${env.BUILD_NUMBER}"
-        sh "docker tag redis:3.2.0  docker.victormerino.cl:5000/redis:latest"
-        sh "docker push docker.victormerino.cl:5000/redis:latest"
-
+        try{
+            sh "docker tag ${docker_app} docker.victormerino.cl:5000/dockerapp:${env.BUILD_NUMBER}"
+            sh "docker push docker.victormerino.cl:5000/dockerapp:${env.BUILD_NUMBER}"
+            sh "docker tag ${docker_app} docker.victormerino.cl:5000/dockerapp:latest"
+            sh "docker push docker.victormerino.cl:5000/dockerapp:latest"
+            sh "docker tag redis:3.2.0 docker.victormerino.cl:5000/redis:${env.BUILD_NUMBER}"
+            sh "docker push docker.victormerino.cl:5000/redis:${env.BUILD_NUMBER}"
+            sh "docker tag redis:3.2.0  docker.victormerino.cl:5000/redis:latest"
+            sh "docker push docker.victormerino.cl:5000/redis:latest"
+        }
+        catch(exc){
+            sh "docker-compose down --rmi 'all' --remove-orphans"
+        }
     }
 
     stage('clean'){
-        sh "docker-compose down"
-        sh "docker image rm redis:3.2.0"
-        sh "docker image rm ${docker_app}"
+        sh "docker-compose down --rmi 'all' --remove-orphans"
     }
 }
