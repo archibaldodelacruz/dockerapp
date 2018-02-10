@@ -1,16 +1,22 @@
 node(label: 'Esclavo-01') {
-    def docker_app = "build_${env.BUILD_NUMBER}_dockerapp_1"
-    def redis_app = "build_${env.BUILD_NUMBER}_redisapp_1"
+    def proyectname = "build_${env.BUILD_NUMBER}"
+    def docker_app = "${proyect_name}_dockerapp_1"
+    def redis_app = "${proyect_name}_redisapp_1"
     stage('Clone repository'){
         checkout scm 
+        echo "Docker_app : ${docker_app}"
+        echo "Redis_app : ${redis_app}"
+        echo "proyect name : ${proyectname}"
     }
     
     stage('Build image'){
-        echo "${env.BUILD_NUMBER}"
-        sh "docker-compose -p build_${env.BUILD_NUMBER} up -d "
+        sh "docker-compose -p ${proyectname} up -d "
     }
 
     stage('Test image'){
+        echo "Docker_app : ${docker_app}"
+        echo "Redis_app : ${redis_app}"
+        echo "proyect name : ${proyectname}"
         sh "docker exec ${docker_app} python test.py"
     }
 
