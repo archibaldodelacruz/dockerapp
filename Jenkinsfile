@@ -5,7 +5,6 @@ node(label: 'Esclavo-01') {
     stage('Clone repository'){
         checkout scm 
         echo "Docker_app : ${docker_app}"
-        echo "Redis_app : ${redis_app}"
         echo "proyect name : ${proyectname}"
     }
     
@@ -21,6 +20,7 @@ node(label: 'Esclavo-01') {
         }
         catch(exc){
             sh 'docker-compose down'
+            sh "docker image rm ${docker_app}"
         }
         
     }
@@ -37,4 +37,9 @@ node(label: 'Esclavo-01') {
 
     }
 
+    stage('clean'){
+        sh "docker-compose down"
+        sh "docker image rm redis:3.2.0"
+        sh "docker image rm ${docker_app}"
+    }
 }
