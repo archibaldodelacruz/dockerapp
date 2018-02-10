@@ -7,7 +7,7 @@ node(label: 'Esclavo-01') {
     
     stage('Build image'){
         echo "${env.BUILD_NUMBER}"
-        sh "docker-compose up -d -p build_${env.BUILD_NUMBER}"
+        sh "docker-compose -p build_${env.BUILD_NUMBER} up -d "
     }
 
     stage('Test image'){
