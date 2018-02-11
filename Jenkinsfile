@@ -38,7 +38,7 @@ node(label: 'Esclavo-01') {
             sh "docker-compose -p ${proyectname} push docker.victormerino.cl:5000"
         }
         catch(exc){
-            sh "docker-compose -p ${proyectname} down"
+           // sh "docker-compose -p ${proyectname} down"
         }
     }
 
