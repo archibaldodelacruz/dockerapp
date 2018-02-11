@@ -19,7 +19,7 @@ node(label: 'Esclavo-01') {
             sh "docker exec ${docker_app}_1 python test.py"
         }
         catch(exc){
-            sh "docker-compose down --rmi 'all' --remove-orphans"
+            sh "docker-compose -p ${proyectname} down --rmi 'all' --remove-orphans"
         }
         
     }
@@ -36,11 +36,11 @@ node(label: 'Esclavo-01') {
             sh "docker push docker.victormerino.cl:5000/redis:latest"
         }
         catch(exc){
-            sh "docker-compose down --rmi 'all' --remove-orphans"
+            sh "docker-compose -p ${proyectname} down"
         }
     }
 
     stage('clean'){
-        sh "docker-compose down --rmi 'all' --remove-orphans"
+        sh "docker-compose -p ${proyectname} down"
     }
 }
