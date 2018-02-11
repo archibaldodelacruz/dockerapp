@@ -35,7 +35,7 @@ node(label: 'Esclavo-01') {
             sh "docker tag redis:3.2.0  docker.victormerino.cl:5000/redis:latest"
             sh "docker push docker.victormerino.cl:5000/redis:latest"
             */
-            sh "docker-compose -p ${proyectname} push"
+            sh "docker-compose -p ${proyectname} push docker.victormerino.cl:5000"
         }
         catch(exc){
             sh "docker-compose -p ${proyectname} down"
