@@ -4,6 +4,8 @@ services:
   build:
     context: .
     dockerfile: Dockerfile.test
+  depends_on: 
+    - dockerapp
  dockerapp:
   build: 
     context: .
