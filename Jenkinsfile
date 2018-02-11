@@ -12,17 +12,17 @@ node(label: 'Esclavo-01') {
         sh "docker-compose -p ${proyectname} up -d "
     }
 
-    stage('Test image'){
+    /*stage('Test image'){
         try{
             echo "Docker_app : ${docker_app}"
             echo "proyect name : ${proyectname}"
             sh "docker exec ${docker_app}_1 python test.py"
         }
         catch(exc){
-            sh "docker-compose -p ${proyectname} down --rmi 'all' --remove-orphans"
+            sh "docker-compose -p ${proyectname} down"
         }
         
-    }
+    }*/
 
     stage('Push image'){
         try{
