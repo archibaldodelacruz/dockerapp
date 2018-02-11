@@ -1,11 +1,9 @@
 version: '3'
 services:
  sut:
-  build: .
-  dockerfile: Dockerfile.test
+  build: Dockerfile.test
  dockerapp:
-  build: .
-  dockerfile: Dockerfile
+  build: Dockerfile
   ports:
    - "4999:5000"
   depends_on:
