@@ -26,7 +26,7 @@ node(label: 'Esclavo-01') {
 
     stage('Push image'){
         try{
-            sh "docker tag ${docker_app} docker.victormerino.cl:5000/dockerapp:${env.BUILD_NUMBER}"
+            /*sh "docker tag ${docker_app} docker.victormerino.cl:5000/dockerapp:${env.BUILD_NUMBER}"
             sh "docker push docker.victormerino.cl:5000/dockerapp:${env.BUILD_NUMBER}"
             sh "docker tag ${docker_app} docker.victormerino.cl:5000/dockerapp:latest"
             sh "docker push docker.victormerino.cl:5000/dockerapp:latest"
@@ -34,6 +34,8 @@ node(label: 'Esclavo-01') {
             sh "docker push docker.victormerino.cl:5000/redis:${env.BUILD_NUMBER}"
             sh "docker tag redis:3.2.0  docker.victormerino.cl:5000/redis:latest"
             sh "docker push docker.victormerino.cl:5000/redis:latest"
+            */
+            sh "docker-compose -p ${proyectname} push"
         }
         catch(exc){
             sh "docker-compose -p ${proyectname} down"
@@ -41,6 +43,7 @@ node(label: 'Esclavo-01') {
     }
 
     stage('clean'){
-        sh "docker-compose -p ${proyectname} down"
+        //sh "docker-compose -p ${proyectname} down"
+        echo 'Clean stage'
     }
 }
